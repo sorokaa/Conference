@@ -1,7 +1,6 @@
 package com.task.Conference.controllers;
 
-import com.task.Conference.dao.TalkDao;
-import com.task.Conference.entities.Talk;
+import com.task.Conference.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,7 +13,7 @@ import java.util.Map;
 public class MainController {
 
     @Autowired
-    private TalkDao talkDao;
+    private UserService userService;
 
     @RequestMapping("/")
     public String mainPage() {
