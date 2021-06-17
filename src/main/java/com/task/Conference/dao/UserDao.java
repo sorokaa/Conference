@@ -1,9 +1,11 @@
 package com.task.Conference.dao;
 
 import com.task.Conference.entities.User;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserDao extends CrudRepository<User, Long> {
+public interface UserDao extends JpaRepository<User, Long> {
+    User findByUsername(String username);
 }
+
