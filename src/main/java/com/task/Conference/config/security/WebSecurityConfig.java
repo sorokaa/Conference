@@ -28,13 +28,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder(8);
     }
 
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
             .authorizeRequests()
                 .antMatchers("/h2-console/**").permitAll()
-                .antMatchers("/adminPage/**").access("hasAuthority('ADMIN')")
+                .antMatchers("/admin-page/**").access("hasAuthority('ADMIN')")
+                .antMatchers("/talks-list/**", "/create-talk/").access("hasAuthority('SPEAKER')")
                 .anyRequest().permitAll()
             .and()
                 .formLogin()
