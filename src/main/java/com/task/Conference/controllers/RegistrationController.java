@@ -12,16 +12,21 @@ import java.util.Map;
 @Controller
 public class RegistrationController {
 
-    @Autowired
     private UserService userService;
+
+    @Autowired
+    public RegistrationController(UserService userService) {
+        this.userService = userService;
+    }
 
     @PostMapping("/registration")
     public String addUser(@Valid User user, Map<String, Object> model) {
 
-        if(!userService.save(user)) {
-            model.put("reg_error", "Пользователь уже существует");
+        if (!userService.saveUser(user)) {
+            model.put("error", "Пользователь с таким именем существует");
+            return "registration";
         }
 
-        return "registration";
+        return "redirect:/";
     }
 }
