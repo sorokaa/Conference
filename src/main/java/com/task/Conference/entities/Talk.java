@@ -1,49 +1,47 @@
 package com.task.Conference.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
+@Table(name="talk")
 public class Talk {
 
     @Id
-    @GeneratedValue
-    @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_talk")
     private Long id;
 
     @Column(name = "theme")
     private String theme;
 
-    @Column(name = "shortInfo")
+    @Column(name = "short_info")
     private String shortInfo;
 
-    public Talk() {
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "talk")
+    private List<Schedule> schedules;
 
-    }
 
-    public Long getId() {
-        return id;
-    }
+    @ManyToMany
+    @JoinTable(
+        name = "USER_TALKS",
+        joinColumns = { @JoinColumn(name = "id_talk") },
+        inverseJoinColumns = { @JoinColumn(name = "user_id") }
+    )
+    private Set<User> speakers = new HashSet<>();
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getTheme() {
-        return theme;
-    }
-
-    public void setTheme(String theme) {
+    public Talk(String theme, String short_info) {
         this.theme = theme;
+        this.shortInfo = short_info;
     }
 
-    public String getShortInfo() {
-        return shortInfo;
-    }
-
-    public void setShortInfo(String shortInfo) {
-        this.shortInfo = shortInfo;
-    }
 }
