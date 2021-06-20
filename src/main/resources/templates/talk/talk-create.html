@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Создать доклад</title>
+</head>
+<body>
+
+<div th:insert="index::header"></div>
+<div style="margin-top: 50px;" class="main">
+    <form th:action="@{/talk-create}" method="post">
+        О докладе:<br>
+        <input type="text" name="theme" placeholder="Тема"><br>
+        <input type="text" name="shortInfo" placeholder="Аннотация"><br>
+        <input type="date" name="date_of_talk">
+        <input type="time" name="time_of_talk">
+        <br>
+        Аудитория:<br>
+        <th:block th:each="room : ${rooms}">
+            <input type="radio" checked name="room" th:value="${room.id}"/>
+            <label th:text="${room.number}"></label>
+        </th:block>
+        <br>
+        Докладчик(-и):<br>
+        <th:block th:each="user : ${users}">
+            <input type="checkbox" name="users" th:value="${user.id}" />
+            <label th:text="${user.username}"></label>
+        </th:block>
+        <br>
+        <button type="submit">Submit</button>
+    </form>
+</div>
+
+</body>
+</html>

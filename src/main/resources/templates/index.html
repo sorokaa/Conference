@@ -2,14 +2,48 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Регистрация</title>
+    <title>Главная</title>
 </head>
 <body>
-    <div class="header">
-        <a th:href="@{/}">Конференция</a>
-        <a th:href="@{/registration}">Регистрация</a>
-        <a th:href="@{/talksList}">Список докладов</a>
-        <a th:href="@{/adminPage}">Админ</a>
+    <div class="header" th:fragment="header">
+        <a th:href="@{/}">Главная</a>
+        <div class="" sec:authorize="isAnonymous()">
+            <a th:href="@{/registration}">Регистрация</a>
+            <a th:href="@{/login}">Авторизация</a>
+        </div>
+        <a th:href="@{/talks-list}">Список докладов</a>
+        <a th:href="@{/admin-page}">Админ</a>
+        <div class="" sec:authorize="isAuthenticated()">
+            <a th:href="@{/logout}">Выйти с аккаунта</a>
+        </div>
+    </div>
+    <div sec:authorize="isAuthenticated()">
+        Status: Authorized
+    </div>
+
+    <div sec:authorize="isAnonymous()">
+        Status: Not authorized
+    </div>
+
+    <div>
+        <div style="border: 1px solid black; margin-top: 10px;" th:each="room : ${rooms}">
+            <p th:text="Аудитория + ' ' + ${room.number}"></p>
+            <div style="margin-left: 20px;" th:each="schedule : ${room.schedules}">
+                <p th:text="Доклад + ' № ' + ${schedule.id}"></p>
+                <ul>
+                    <li><p th:text="Время + ': ' + ${schedule.timeOfTalk}"></p></li>
+                    <li><p th:text="Тема + ': ' + ${schedule.talk.theme}"></p></li>
+                    <li><p th:text="Аннотация + ': ' + ${schedule.talk.shortInfo}"></p></li>
+                    <li><p>Докладчик(-и):</p>
+                        <ol>
+                            <div th:each="speaker : ${schedule.talk.speakers}">
+                                <li><p th:text="${speaker.username}"></p></li>
+                            </div>
+                        </ol>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </div>
 </body>
 </html>

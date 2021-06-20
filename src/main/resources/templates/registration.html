@@ -2,9 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Регистрация</title>
 </head>
 <body>
-
+    <div class="header" th:insert="index::header"></div>
+    <p th:text="${error}"></p>
+    <form th:action="@{/registration}" method="post">
+        <input type="text" autocomplete="off" placeholder="Username" name="username">
+        <input type="password" autocomplete="off" placeholder="Password" name="password">
+        <button type="submit">Зарегистрироваться</button>
+    </form>
 </body>
 </html>

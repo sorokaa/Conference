@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Список докладов</title>
+</head>
+<body>
+<div class="header" th:insert="index::header"></div>
+
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Тема</th>
+        <th>Краткая инфа</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="talk : ${talks}">
+        <td th:text="${talk.id}"></td>
+        <td th:text="${talk.theme}"></td>
+        <td th:text="${talk.shortInfo}"></td>
+        <td><a th:href="@{talk-update/{id}(id=${talk.id})}">Изменить</a></td>
+        <td><a th:href="@{talk-delete/{id}(id=${talk.id})}">Удалить</a></td>
+    </tr>
+    </tbody>
+</table>
+<a th:href="@{/talk-create}">Создать доклад</a>
+</body>
+</html>
