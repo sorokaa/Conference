@@ -1,6 +1,7 @@
 package com.task.Conference.services;
 
-import com.task.Conference.dao.UserDao;
+import com.task.Conference.repositories.UserRepository;
+import com.task.Conference.entities.Role;
 import com.task.Conference.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,20 +11,18 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Collections;
+import java.util.List;
 
 @Service
 @Transactional
 public class UserService implements UserDetailsService {
 
-    private UserDao userRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
-
-    @Autowired
-    public UserService(UserDao userRepository) {
-        this.userRepository = userRepository;
-    }
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
@@ -38,6 +37,10 @@ public class UserService implements UserDetailsService {
         if (userRepository.findByUsername(user.getUsername()) != null) {
             return false;
         }
+
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setRole(Collections.singleton(Role.LISTENER));
+
         userRepository.save(user);
         return true;
     }
@@ -54,7 +57,7 @@ public class UserService implements UserDetailsService {
         userRepository.deleteById(id);
     }
 
-    public Iterable<User> findAll() {
+    public List<User> findAll() {
         return userRepository.findAll();
     }
 
