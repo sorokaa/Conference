@@ -2,14 +2,15 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Update user</title>
+    <title>Изменить пользователя</title>
 </head>
 <body>
+<div th:insert="index::header"></div>
 <form action="" th:action="@{/user-update}" th:object="${user}" method="post">
-    <input readonly type="number" th:field="*{id}" placeholder="Id">
-    <input type="text" th:field="*{username}" placeholder="Username">
+    <input readonly type="number" th:field="*{id}" placeholder="Id"><br>
+    <input type="text" th:field="*{username}" placeholder="Username"><br>
     <input type="text" hidden th:field="*{password}">
-    <input type="text" th:field="*{roles}" placeholder="Роль">
+    <input type="text" th:field="*{role}" placeholder="Роль"><br>
     <input type="submit" value="Обновить">
 </form>
 </body>
