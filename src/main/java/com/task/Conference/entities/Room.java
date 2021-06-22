@@ -13,14 +13,14 @@ import java.util.List;
 public class Room {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_room")
     private Long id;
 
     @Column(name = "number", unique = true)
     private Long number;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "room")
+    @OneToMany(mappedBy = "room")
     private List<Schedule> schedules;
 
 }

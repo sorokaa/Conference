@@ -1,11 +1,12 @@
 package com.task.Conference.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -27,16 +28,11 @@ public class Talk {
     private String shortInfo;
 
     @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "talk")
-    private List<Schedule> schedules;
+    @OneToOne(mappedBy = "talk")
+    private Schedule schedule;
 
 
-    @ManyToMany
-    @JoinTable(
-        name = "USER_TALKS",
-        joinColumns = { @JoinColumn(name = "id_talk") },
-        inverseJoinColumns = { @JoinColumn(name = "user_id") }
-    )
+    @ManyToMany(mappedBy = "talks", cascade = CascadeType.MERGE)
     private Set<User> speakers = new HashSet<>();
 
     public Talk(String theme, String short_info) {

@@ -1,7 +1,10 @@
 package com.task.Conference.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -25,9 +28,10 @@ public class User implements UserDetails {
     private Long id;
 
     @NotNull
-    @Column
+    @Column(name = "username", unique = true)
     private String username;
 
+    @NotNull
     @Column(name = "password")
     private String password;
 
@@ -37,7 +41,12 @@ public class User implements UserDetails {
     private Set<Role> role;
 
     @JsonIgnore
-    @ManyToMany(mappedBy = "speakers")
+    @ManyToMany
+    @JoinTable(
+        name = "USER_TALKS",
+        joinColumns = { @JoinColumn(name = "user_id") },
+        inverseJoinColumns = { @JoinColumn(name = "id_talk") }
+    )
     private Set<Talk> talks = new HashSet<>();
 
     @JsonIgnore
