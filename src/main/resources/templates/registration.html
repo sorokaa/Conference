@@ -3,14 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <title>Регистрация</title>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
 </head>
 <body>
-    <div class="header" th:insert="index::header"></div>
-    <p th:text="${error}"></p>
-    <form th:action="@{/registration}" method="post">
-        <input type="text" autocomplete="off" placeholder="Username" name="username">
-        <input type="password" autocomplete="off" placeholder="Password" name="password">
-        <button type="submit">Зарегистрироваться</button>
-    </form>
+<div class="header" th:insert="index::header"></div>
+
+
+<div class="row justify-content-md-center" style="margin-top: 50px;">
+    <div class="col-md-3">
+        <p th:text="${error}"></p>
+        <form th:action="@{/registration}" method="post">
+            <div class="form-group row">
+                <div class="col-sm-12">
+                    <input type="text" name="username" class="form-control" placeholder="Ник">
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-12">
+                    <input type="password" name="password" class="form-control" placeholder="Пароль">
+                </div>
+            </div>
+            <div class="form-group row justify-content-md-end">
+                <div class="col-md-5">
+                    <button type="submit" class="btn btn-dark">Регистрация</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
 </body>
 </html>
