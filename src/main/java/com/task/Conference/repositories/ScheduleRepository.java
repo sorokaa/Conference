@@ -24,4 +24,7 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
     @Query("DELETE FROM Schedule u WHERE u.talk = :talk")
     void deleteByTalk(@Param("talk") Talk talk);
 
+
+    Schedule findByTalk(Talk talk);
+
 }
