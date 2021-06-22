@@ -50,6 +50,15 @@ public class AdminController {
 
     @PostMapping("/user-update")
     public String updateUser(User user) {
+
+        if (user.getUsername().isEmpty()) {
+            return "redirect:/admin-page";
+        }
+
+        if (user.getAuthorities().isEmpty()) {
+            return "redirect:/admin-page";
+        }
+
         userService.updateUser(user);
         return "redirect:/admin-page";
     }
