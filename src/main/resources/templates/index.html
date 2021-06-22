@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Главная</title>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" th:fragment="header">
+
+    <a class="navbar-brand" th:href="@{/}">Главная</a>
+
+    <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-333" aria-controls="navbarSupportedContent-333" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent-333">
+        <ul class="navbar-nav ml-auto nav-flex-icons">
+            <div sec:authorize="isAnonymous()">
+                <div class="nav-item">
+                    <a class="nav-link" th:href="@{/registration}">Регистрация</a>
+                </div>
+            </div>
+
+            <div sec:authorize="isAnonymous()">
+                <div class="nav-item">
+                    <a class="nav-link"  th:href="@{/login}">Авторизация</a>
+                </div>
+            </div>
+
+            <li class="nav-item" sec:authorize="hasAuthority('SPEAKER')">
+                <a class="nav-link" th:href="@{/talks-list}">Список докладов</a>
+            </li>
+
+            <li class="nav-item" sec:authorize="hasAuthority('ADMIN')">
+                <a class="nav-link" th:href="@{/admin-page}">Список пользователей</a>
+            </li>
+
+            <li class="nav-item" sec:authorize="isAuthenticated()">
+                <a class="nav-link" th:href="@{/logout}">Выйти с аккаунта</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="row justify-content-md-center">
+
+    <div class="list-group col-md-6 ">
+        <div th:each="room:${rooms}">
+            <h3 class="list-group-item" th:text="Аудитория + ': ' + ${room.number}"></h3>
+            <div class="list-group" th:each="schedule:${room.schedules}">
+                <h5 class="list-group-item" th:text="Доклад + ' # '+ ${schedule.id}"></h5>
+                <ul class="list-group" style="padding-left: 20px">
+                    <li class="list-group-item" th:text="Время + ': ' + ${schedule.timeOfTalk}"></li>
+                    <li class="list-group-item" th:text="Тема + ': ' + ${schedule.talk.theme}"></li>
+                    <li class="list-group-item" th:text="Аннотация + ': ' + ${schedule.talk.shortInfo}"></li>
+                </ul>
+                <h5 class="list-group-item" style="margin-left: 20px;">Докладчики</h5>
+                <div style="padding-left: 40px" class="list-group" th:each="speaker:${schedule.talk.speakers}">
+                    <p class="list-group-item" th:text="${speaker.username}"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+</body>
+</html>
