@@ -1,9 +1,9 @@
 package com.task.Conference.services;
 
-import com.task.Conference.repositories.ScheduleRepository;
 import com.task.Conference.entities.Room;
 import com.task.Conference.entities.Schedule;
 import com.task.Conference.entities.Talk;
+import com.task.Conference.repositories.ScheduleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,8 +29,12 @@ public class ScheduleService {
         return !schedules.isEmpty();
     }
 
-    public void deleteByTalk(Talk talk) {
-        scheduleRepository.deleteByTalk(talk);
+    public Schedule findByTalk(Talk talk) {
+        return scheduleRepository.findByTalk(talk);
+    }
+
+    public void deleteById(Long id) {
+        scheduleRepository.deleteById(id);
     }
 
 }

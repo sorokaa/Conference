@@ -29,9 +29,19 @@ public class RoomService {
         roomRepository.deleteById(id);
     }
 
-    public void save(Room room) {
+    public boolean save(Room room) {
+
+        Room roomFromDB = roomRepository.findByNumber(room.getNumber());
+        if (roomFromDB != null) {
+            return false;
+        }
+
         roomRepository.save(room);
+        return true;
     }
 
+    public Room findByNumber(Long number) {
+        return roomRepository.findByNumber(number);
+    }
 
 }

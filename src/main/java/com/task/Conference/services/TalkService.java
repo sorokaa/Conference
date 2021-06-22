@@ -1,5 +1,6 @@
 package com.task.Conference.services;
 
+import com.task.Conference.entities.User;
 import com.task.Conference.repositories.TalkRepository;
 import com.task.Conference.entities.Talk;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,15 @@ public class TalkService {
     }
 
     public void deleteById(Long id) {
+
+        Talk talk = talksRepository.getById(id);
+
+        for (User user : talk.getSpeakers()) {
+            user.getTalks().remove(talk);
+        }
+
+        save(talk);
+
         talksRepository.deleteById(id);
     }
 

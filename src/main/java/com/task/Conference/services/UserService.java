@@ -15,7 +15,6 @@ import java.util.Collections;
 import java.util.List;
 
 @Service
-@Transactional
 public class UserService implements UserDetailsService {
 
     @Autowired
@@ -26,15 +25,21 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+
         User user = userRepository.findByUsername(s);
-        if (user != null) {
-            return user;
+
+        if (user == null) {
+            throw new UsernameNotFoundException("User not found");
         }
-        throw new UsernameNotFoundException("User not found");
+
+        return user;
     }
 
     public boolean saveUser(User user) {
-        if (userRepository.findByUsername(user.getUsername()) != null) {
+
+        User userFromDatabase = userRepository.findByUsername(user.getUsername());
+
+        if (userFromDatabase != null) {
             return false;
         }
 
