@@ -12,12 +12,8 @@ import java.util.Map;
 @Controller
 public class RegistrationController {
 
-    private UserService userService;
-
     @Autowired
-    public RegistrationController(UserService userService) {
-        this.userService = userService;
-    }
+    private UserService userService;
 
     @PostMapping("/registration")
     public String addUser(@Valid User user, Map<String, Object> model) {

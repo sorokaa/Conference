@@ -12,12 +12,8 @@ import java.util.Map;
 @Controller
 public class MainController {
 
-    private RoomService roomService;
-
     @Autowired
-    public MainController(RoomService roomService) {
-        this.roomService = roomService;
-    }
+    private RoomService roomService;
 
     @GetMapping("/")
     public String mainPage(Map<String, Object> model) {
